@@ -1,12 +1,16 @@
 #!/bin/bash -e
 
-S2I_DESTINATION_DIR="${S2I_DESTINATION_DIR:-/tmp}"
-S2I_ARTIFACTS_DIR="${S2I_DESTINATION_DIR}/artifacts"
-S2I_SOURCE_DIR="${S2I_DESTINATION_DIR}/src"
+readonly S2I_DESTINATION_DIR="${S2I_DESTINATION_DIR:-/tmp}"
+readonly S2I_ARTIFACTS_DIR="${S2I_DESTINATION_DIR}/artifacts"
+readonly S2I_SOURCE_DIR="${S2I_DESTINATION_DIR}/src"
+readonly JWS_LIB_DIR="${JWS_HOME}/lib"
+readonly JWS_CONF_DIR="${JWS_HOME}/conf"
+readonly JWS_WEBAPPS_DIR="${JWS_HOME}/webapps"
 
-export JWS_LIB_DIR="${JWS_HOME}/lib"
-export JWS_CONF_DIR="${JWS_HOME}/conf"
-export JWS_WEBAPPS_DIR="${JWS_HOME}/webapps"
+export S2I_SOURCE_DIR
+export JWS_LIB_DIR
+export JWS_CONF_DIR
+export JWS_WEBAPPS_DIR
 
 if [ -d "${S2I_ARTIFACTS_DIR}/repository" ]; then
   echo "---> Restoring build artifacts..."
