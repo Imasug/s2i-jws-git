@@ -1,0 +1,22 @@
+#!/bin/bash -e
+
+S2I_DESTINATION_DIR="${S2I_DESTINATION_DIR:-/tmp}"
+S2I_ARTIFACTS_DIR="${S2I_DESTINATION_DIR}/artifacts"
+S2I_SOURCE_DIR="${S2I_DESTINATION_DIR}/src"
+
+export JWS_LIB_DIR="${JWS_HOME}/lib"
+export JWS_CONF_DIR="${JWS_HOME}/conf"
+export JWS_WEBAPPS_DIR="${JWS_HOME}/webapps"
+
+if [ -d "${S2I_ARTIFACTS_DIR}/repository" ]; then
+  echo "---> Restoring build artifacts..."
+  mv "${S2I_ARTIFACTS_DIR}/repository" "${HOME}/.m2/"
+fi
+
+if [ -f "${JBOSS_CONTAINER_MAVEN_DEFAULT_MODULE}/scl-enable-maven" ]; then
+  . "${JBOSS_CONTAINER_MAVEN_DEFAULT_MODULE}/scl-enable-maven"
+fi
+
+if [ -f "${S2I_SOURCE_DIR}/bin/assemble" ]; then
+  sh "${S2I_SOURCE_DIR}/bin/assemble"
+fi

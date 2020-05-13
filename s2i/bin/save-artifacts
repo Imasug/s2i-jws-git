@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+pushd "${HOME}/.m2" > /dev/null
+if [ -d repository ]; then
+  tar cf - repository
+fi
+popd > /dev/null
