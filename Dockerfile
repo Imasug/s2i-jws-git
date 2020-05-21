@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/jboss-webserver-3/webserver31-tomcat8-openshift
+FROM registry.redhat.io/jboss-webserver-3/webserver31-tomcat8-openshift
 
 USER root
 
@@ -12,7 +12,10 @@ RUN curl https://raw.githubusercontent.com/cloudrouter/centos-repo/master/CentOS
     yum clean all
 
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+COPY ./contrib/tomcat-extension.jar $JWS_HOME/lib/
+COPY ./contrib/server.xml $JWS_HOME/conf/
 
 RUN chmod -R +x $STI_SCRIPTS_PATH
+RUN echo "root:root" | chpasswd
 
-USER 185
+# USER 185

@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+export JAVA_OPTS="${JAVA_OPTS} \
+                 -DsyslogHost=host.docker.internal \
+                 -Dport=514 \
+                 -Dfacility=USER \
+                 -Dseverity=INFO \
+                 -Dpattern=common"
+
+exec $JWS_HOME/bin/launch.sh | \
+  logger \
+    -d \
+    -s \
+    -n "${SYSLOG_HOST:-host.docker.internal}" \
+    -P "${PORT:-514}" \
+    -p "${FACILITY:-USER}.${SEVERITY:-INFO}" \
+    -t "${TAG:-TAG}" \
